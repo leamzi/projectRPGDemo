@@ -5,13 +5,15 @@ using UnityStandardAssets.Characters.ThirdPerson;
 [RequireComponent(typeof (ThirdPersonCharacter))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    float walkMoveStopRadius = 0.2f;
+    [SerializeField] float walkMoveStopRadius = 0.2f;
 
     ThirdPersonCharacter m_Character;   // A reference to the ThirdPersonCharacter on the object
     CameraRaycaster cameraRaycaster;
     Vector3 currentClickTarget;
-        
+
+    bool isInDirectMode = false; // TODO consider making static later
+
+    #region Monobehaviour Methods
     private void Start()
     {
         cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
@@ -19,14 +21,29 @@ public class PlayerMovement : MonoBehaviour
         currentClickTarget = transform.position;
     }
 
-    // TODO fix issue with click to move and WASD conflicting and increasing speed
-
     // Fixed update is called in sync with physics
     private void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.G)) // G for gamepad. TODO add to menu
+        {
+            isInDirectMode = !isInDirectMode; // toggle mode
+        }
+        
+        if(isInDirectMode)
+        {
+            ProcessDirectMovement();
+        }
+        else
+        {
+            ProcessMouseMovement();
+        }
+    }
+    #endregion
+
+    private void ProcessMouseMovement()
+    {
         if (Input.GetMouseButton(0))
         {
-            //print("Cursor raycast hit" + cameraRaycaster.hit.collider.gameObject.name.ToString());
             switch (cameraRaycaster.layerHit)
             {
                 case Layer.Walkable:
@@ -50,6 +67,19 @@ public class PlayerMovement : MonoBehaviour
         {
             m_Character.Move(Vector3.zero, false, false);
         }
+    }
+
+    private void ProcessDirectMovement()
+    {
+        // read inputs
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
+        // calculate camera relative direction to move:
+        Vector3 m_CamForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
+        Vector3 m_Move = v * m_CamForward + h * Camera.main.transform.right;
+
+        m_Character.Move(m_Move, false, false);
     }
 }
 
