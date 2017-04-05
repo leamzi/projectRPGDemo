@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
                     currentDestination = ShortDestination(clickPoint, walkMoveStopRadius);
                     break;
                 case Layer.Enemy:
-                    currentDestination = ShortDestination(clickPoint, attackMoveStopRadius);
+                    currentDestination  = ShortDestination(clickPoint, attackMoveStopRadius);
                     break;
                 case Layer.RaycastEndStop:
                     break;
