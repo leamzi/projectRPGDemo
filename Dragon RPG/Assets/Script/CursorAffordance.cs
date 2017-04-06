@@ -21,7 +21,6 @@ public class CursorAffordance : MonoBehaviour {
     // Only called when layer changes
     void OnLayerChanged(Layer newLayer)
     {
-        print("Changing cursor");
         switch (newLayer)
         {
             case Layer.Walkable:
