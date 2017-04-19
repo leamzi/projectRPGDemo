@@ -21,49 +21,30 @@ public class PlayerMovement : MonoBehaviour
         thirdPersonCharacter = GetComponent<ThirdPersonCharacter>();
         currentDestination = transform.position;
     }
-
-    // Fixed update is called in sync with physics
-    private void FixedUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.G)) // G for gamepad. TODO add to menu
-        {
-            isInDirectMode = !isInDirectMode; // toggle mode
-            currentDestination = transform.position; // clear the click target
-        }
-
-        if (isInDirectMode)
-        {
-            ProcessDirectMovement();
-        }
-        else
-        {
-            ProcessMouseMovement();
-        }
-    }
     #endregion
 
-    private void ProcessMouseMovement()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            clickPoint = cameraRaycaster.hit.point;
-            switch (cameraRaycaster.currentLayerHit)
-            {
-                case Layer.Walkable:
-                    currentDestination = ShortDestination(clickPoint, walkMoveStopRadius);
-                    break;
-                case Layer.Enemy:
-                    currentDestination  = ShortDestination(clickPoint, attackMoveStopRadius);
-                    break;
-                case Layer.RaycastEndStop:
-                    break;
-                default:
-                    break;
-            }
-        }
+    //private void ProcessMouseMovement()
+    //{
+    //    if (Input.GetMouseButton(0))
+    //    {
+    //        clickPoint = cameraRaycaster.hit.point;
+    //        switch (cameraRaycaster.currentLayerHit)
+    //        {
+    //            case Layer.Walkable:
+    //                currentDestination = ShortDestination(clickPoint, walkMoveStopRadius);
+    //                break;
+    //            case Layer.Enemy:
+    //                currentDestination  = ShortDestination(clickPoint, attackMoveStopRadius);
+    //                break;
+    //            case Layer.RaycastEndStop:
+    //                break;
+    //            default:
+    //                break;
+    //        }
+    //    }
 
-        WalkToDestination();
-    }
+    //    WalkToDestination();
+    //}
     
     private void ProcessDirectMovement()
     {
