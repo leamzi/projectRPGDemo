@@ -9,10 +9,6 @@ public class SpinMe : MonoBehaviour {
 	[SerializeField] float zRotationsPerMinute = 1f;
 	
 	void Update () {
-        // xDegreesPerFrame = Time.Deltatime, 60, 360, xRotationsPerMinute
-        // degrees frame^-1 = seconds frame^-1 / seconds minutes^-1, degrees rotation^-1 * rotations minute^-1
-        // degrees frame^-1 = frame^-1 minute * degrees rotation^-1 * rotations minute^-1
-        // degrees frame^-1 = frame^-1 * degrees
 
         float xDegreesPerFrame = Time.deltaTime / 60 * 360 * xRotationsPerMinute;
         transform.RotateAround (transform.position, transform.right, xDegreesPerFrame);
