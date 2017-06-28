@@ -1,2 +1,2 @@
-# udemy_Unity_TheUnityRPGCreator
-Udemy course:  The Unity RPG Creator in C#
+# Demo Test RPG
+Test stuff to make a demo for a RPG game in Unity
